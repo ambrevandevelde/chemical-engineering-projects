@@ -6,7 +6,7 @@ Welcome to my portfolio of chemical engineering projects. These projects highlig
 - **Objective**: Simulate sustainable chemical processes to minimize waste and energy consumption.
 - **Technologies Used**: Python, MATLAB, NumPy, Pandas
 - **Summary**: This project demonstrates how mathematical modeling and simulations can optimize chemical processes to reduce environmental impact.
-[Link to Project](./Project1-Sustainability-Modeling)
+[Project1-sustainability-modeling](./Project1-Sustainability-Modeling)
 
 ### 2. Reactor Optimization Design
 - **Objective**: Design an optimal chemical reactor using thermodynamics and fluid mechanics principles.
