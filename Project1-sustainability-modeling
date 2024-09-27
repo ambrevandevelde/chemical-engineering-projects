@@ -1,1 +1,23 @@
+import numpy as np
+import pandas as pd
 
+def energy_consumption(temp, pressure, volume):
+    R = 8.314  # gas constant in J/(mol*K)
+    n = volume / 22.4  # mol of gas at STP (in liters)
+    energy = n * R * temp * pressure
+    return energy
+
+# Example data for simulation
+temp_range = np.arange(300, 500, 10)
+pressure_range = np.arange(1, 10, 1)
+volume = 100  # Liters
+
+energy_data = []
+for temp in temp_range:
+    for pressure in pressure_range:
+        energy = energy_consumption(temp, pressure, volume)
+        energy_data.append([temp, pressure, energy])
+
+df = pd.DataFrame(energy_data, columns=['Temperature(K)', 'Pressure(atm)', 'Energy(J)'])
+df.to_csv('results/energy_consumption.csv', index=False)
+print(df.head())
