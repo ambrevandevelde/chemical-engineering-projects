@@ -1,5 +1,3 @@
-# chemical-engineering-projects
-A collection of projects showcasing chemical engineering concepts, sustainability, and coding applied to real-world problems.
 # Chemical Engineering Projects Portfolio
 Welcome to my portfolio of chemical engineering projects. These projects highlight my interest in chemical processes, sustainability, and engineering, and how they can be applied to solve real-world challenges. Each project contains detailed descriptions, code, and analysis.
 
