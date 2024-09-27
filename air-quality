@@ -1,0 +1,74 @@
+import pandas as pd
+
+# Sample data for air quality experiment
+data = {
+    'Date': ['2023-10-26', '2023-10-27', '2023-10-28', '2023-10-29', '2023-10-30'],
+    'Location': ['City Center', 'Suburb', 'Industrial Area', 'Park', 'Highway'],
+    'Temperature (°C)': [25, 24, 26, 23, 27],
+    'Humidity (%)': [60, 65, 55, 70, 50],
+    'Ozone (ppb)': [45, 38, 52, 35, 60],
+    'CO (ppm)': [2.5, 1.8, 3.2, 1.5, 4.0],
+    'PM2.5 (μg/m³)': [15, 10, 20, 8, 25]
+}
+
+# Create a Pandas DataFrame
+df = pd.DataFrame(data)
+
+# Display the table
+print(df)
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample data for air quality experiment
+data = {
+    'Date': ['2023-10-26', '2023-10-27', '2023-10-28', '2023-10-29', '2023-10-30'],
+    'CO_ppm': [5.2, 6.1, 4.8, 5.5, 6.3],
+    'NO2_ppb': [25, 30, 22, 28, 32],
+    'PM2.5_ug/m3': [15, 18, 12, 16, 19]
+}
+
+df = pd.DataFrame(data)
+
+# Create a graph of air quality measurements
+plt.figure(figsize=(10, 6))
+plt.plot(df['Date'], df['CO_ppm'], label='CO (ppm)', marker='o')
+plt.plot(df['Date'], df['NO2_ppb'], label='NO2 (ppb)', marker='o')
+plt.plot(df['Date'], df['PM2.5_ug/m3'], label='PM2.5 (ug/m3)', marker='o')
+plt.xlabel('Date')
+plt.ylabel('Concentration')
+plt.title('Air Quality Measurements')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Suggested solutions based on the graph
+# Example:
+# - Increase public transportation use to reduce vehicle emissions (CO, NO2)
+# - Implement stricter emission controls for industries
+# - Promote the use of cleaner energy sources 
+# - Encourage green spaces and vegetation to absorb pollutants
+
+# Create a new table with data from the solutions
+# (This is a hypothetical example, actual data would be collected)
+solution_data = {
+    'Solution': ['Increase Public Transport', 'Stricter Emission Controls', 'Promote Cleaner Energy', 'Increase Green Spaces'],
+    'CO_Reduction_%': [10, 15, 8, 5],
+    'NO2_Reduction_%': [12, 18, 10, 6],
+    'PM2.5_Reduction_%': [8, 12, 6, 4]
+}
+
+solution_df = pd.DataFrame(solution_data)
+
+
+# Create a new graph showing the potential impact of solutions
+plt.figure(figsize=(10, 6))
+plt.bar(solution_df['Solution'], solution_df['CO_Reduction_%'], label='CO Reduction (%)')
+plt.bar(solution_df['Solution'], solution_df['NO2_Reduction_%'], label='NO2 Reduction (%)', bottom=solution_df['CO_Reduction_%'])
+plt.bar(solution_df['Solution'], solution_df['PM2.5_Reduction_%'], label='PM2.5 Reduction (%)', bottom=solution_df['CO_Reduction_%'] + solution_df['NO2_Reduction_%'])
+plt.xlabel('Solution')
+plt.ylabel('Reduction Percentage')
+plt.title('Potential Impact of Air Quality Solutions')
+plt.legend()
+plt.xticks(rotation=45, ha='right')
+plt.grid(True)
+plt.show()
