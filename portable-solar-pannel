@@ -3,22 +3,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-# Generate sample data for solar panel performance
 dates = pd.date_range(start='2023-01-01', end='2023-01-31', freq='H')
-power_generated = np.random.normal(loc=500, scale=100, size=len(dates))  
-used_energy = np.random.normal(loc=300, scale=50, size=len(dates)) 
+power = np.random.normal(loc=500, scale=100, size=len(dates))  
+energy_used = np.random.normal(loc=300, scale=50, size=len(dates)) 
 irradiance = np.random.uniform(low=500, high=1000, size=len(dates)) 
 temperature = np.random.uniform(low=15, high=35, size=len(dates))  
-panel_efficiency = np.random.uniform(low=0.15, high=0.20, size=len(dates))  
+efficiency = np.random.uniform(low=0.15, high=0.20, size=len(dates))  
 
 # Create a DataFrame
 data = pd.DataFrame({
     'Date': dates,
-    'Power Generated (W)': power_generated,
-    'Used Energy (W)': used_energy,
+    'Power Generated (W)': power,
+    'Used Energy (W)': energy_used,
     'Irradiance (W/m^2)': irradiance,
     'Temperature (°C)': temperature,
-    'Panel Efficiency': panel_efficiency
+    'Panel Efficiency': efficiency
 })
 
 
@@ -34,16 +33,11 @@ peak_power_hours = data.loc[data.groupby(data['Date'].dt.date)['Power Generated 
 # Calculate the average efficiency of the system
 average_efficiency = data['Panel Efficiency'].mean()
 
-# Implement a forecasting model (Linear Regression example)
-# We will use irradiance as a predictor for power generated
+
 X = data[['Irradiance (W/m^2)']]
 y = data['Power Generated (W)']
 model = LinearRegression()
 model.fit(X, y)
-
-# Forecast for next 24 hours
-future_irradiance = np.random.uniform(low=500, high=1000, size=24)
-forecast_power = model.predict(np.array(future_irradiance).reshape(-1, 1))
 
 
 
