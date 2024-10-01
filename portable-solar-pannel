@@ -1,0 +1,89 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Generate sample data for solar panel performance
+dates = pd.date_range(start='2023-01-01', end='2023-01-31', freq='H')
+power_generated = np.random.normal(loc=500, scale=100, size=len(dates))  # Watts
+used_energy = np.random.normal(loc=300, scale=50, size=len(dates))  # Watts
+irradiance = np.random.uniform(low=500, high=1000, size=len(dates))  # W/m^2
+temperature = np.random.uniform(low=15, high=35, size=len(dates))  # Celsius
+panel_efficiency = np.random.uniform(low=0.15, high=0.20, size=len(dates))  # Efficiency
+
+# Create a DataFrame
+data = pd.DataFrame({
+    'Date': dates,
+    'Power Generated (W)': power_generated,
+    'Used Energy (W)': used_energy,
+    'Irradiance (W/m^2)': irradiance,
+    'Temperature (°C)': temperature,
+    'Panel Efficiency': panel_efficiency
+})
+
+
+# Calculate net energy generated
+data['Net Energy (W)'] = data['Power Generated (W)'] - data['Used Energy (W)']
+
+# Calculate daily energy yield
+daily_energy = data.groupby(data['Date'].dt.date)['Power Generated (W)'].sum()
+
+# Analyze peak power generation times
+peak_power_hours = data.loc[data.groupby(data['Date'].dt.date)['Power Generated (W)'].idxmax()]
+
+# Calculate the average efficiency of the system
+average_efficiency = data['Panel Efficiency'].mean()
+
+# Implement a forecasting model (Linear Regression example)
+# We will use irradiance as a predictor for power generated
+X = data[['Irradiance (W/m^2)']]
+y = data['Power Generated (W)']
+model = LinearRegression()
+model.fit(X, y)
+
+# Forecast for next 24 hours
+future_irradiance = np.random.uniform(low=500, high=1000, size=24)
+forecast_power = model.predict(np.array(future_irradiance).reshape(-1, 1))
+
+
+# Visualizations
+plt.figure(figsize=(12, 6))
+plt.plot(data['Date'], data['Power Generated (W)'], label='Power Generated')
+plt.plot(data['Date'], data['Used Energy (W)'], label='Used Energy')
+plt.plot(data['Date'], data['Net Energy (W)'], label='Net Energy')
+plt.xlabel('Date')
+plt.ylabel('Energy (W)')
+plt.title('Solar Panel Performance')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Daily energy yield plot
+plt.figure(figsize=(12, 6))
+plt.plot(daily_energy.index, daily_energy.values)
+plt.xlabel('Date')
+plt.ylabel('Daily Energy Yield (Wh)')
+plt.title('Daily Energy Yield')
+plt.grid(True)
+plt.show()
+
+# Peak power generation times
+plt.figure(figsize=(12, 6))
+plt.plot(peak_power_hours['Date'], peak_power_hours['Power Generated (W)'], 'ro')
+plt.xlabel('Date')
+plt.ylabel('Peak Power Generation (W)')
+plt.title('Peak Power Generation Times')
+plt.grid(True)
+plt.show()
+
+
+# Print summary statistics
+print(f"Average Panel Efficiency: {average_efficiency:.2f}")
+print("\nDaily Energy Yield:\n", daily_energy)
+print("\nPeak Power Generation Hours:\n", peak_power_hours[['Date', 'Power Generated (W)']])
+
+
+# Print Forecast
+print("\nPower Generation Forecast for Next 24 Hours:")
+for i in range(24):
+    print(f"Hour {i+1}: {forecast_power[i]:.2f} W")
