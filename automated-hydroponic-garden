@@ -1,0 +1,81 @@
+import random
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Simulate sensor readings
+def get_ph_reading():
+  """Simulates pH sensor readings with some random variation."""
+  return random.uniform(5.5, 6.5)
+
+def get_temp_reading():
+  """Simulates temperature sensor readings with some random variation."""
+  return random.uniform(20, 25)
+
+# Regulation logic
+def regulate_ph(ph_reading):
+  """Simulates adjusting pH based on sensor reading."""
+  if ph_reading < 6.0:
+    return "Adding pH Up solution"
+  elif ph_reading > 6.5:
+    return "Adding pH Down solution"
+  else:
+    return "pH within optimal range"
+
+def regulate_temp(temp_reading):
+  """Simulates adjusting temperature based on sensor reading."""
+  if temp_reading < 22:
+    return "Turning on heater"
+  elif temp_reading > 24:
+    return "Turning on cooler"
+  else:
+    return "Temperature within optimal range"
+
+
+# Data collection
+data = []
+for _ in range(20):  # Collect data for 20 readings
+  ph_reading = get_ph_reading()
+  temp_reading = get_temp_reading()
+  ph_action = regulate_ph(ph_reading)
+  temp_action = regulate_temp(temp_reading)
+  data.append([ph_reading, temp_reading, ph_action, temp_action])
+
+
+# Create a Pandas DataFrame for easier analysis
+df = pd.DataFrame(data, columns=['pH', 'Temperature', 'pH Action', 'Temperature Action'])
+
+# Before regulation
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.plot(df['pH'], label='pH')
+plt.plot(df['Temperature'], label='Temperature')
+plt.xlabel('Reading')
+plt.ylabel('Value')
+plt.title('Before Regulation')
+plt.legend()
+
+# Simulate regulation by updating readings and adding new rows to the df
+for _ in range(20):  # Apply regulation for 20 readings
+  ph_reading = get_ph_reading()
+  temp_reading = get_temp_reading()
+  ph_action = regulate_ph(ph_reading)
+  temp_action = regulate_temp(temp_reading)
+  data.append([ph_reading, temp_reading, ph_action, temp_action])
+
+# Create a Pandas DataFrame for easier analysis
+df = pd.DataFrame(data, columns=['pH', 'Temperature', 'pH Action', 'Temperature Action'])
+
+
+# After regulation
+plt.subplot(1, 2, 2)
+plt.plot(df['pH'], label='pH')
+plt.plot(df['Temperature'], label='Temperature')
+plt.xlabel('Reading')
+plt.ylabel('Value')
+plt.title('After Regulation')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+print(df)  # Displays data table
